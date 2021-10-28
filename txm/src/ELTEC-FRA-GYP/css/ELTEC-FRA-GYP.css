@@ -1,0 +1,103 @@
+/*  
+   Copyright © 2021 ENS de Lyon, CNRS, University of Franche-Comté
+   Licensed under the terms of the GNU General Public License (http://www.gnu.org/licenses)
+   @author cbourdot
+   @author sheiden
+
+*/
+
+.txmeditionpage {
+	background-color: #f8f7ee;
+	font-family: im-fell-great-primer, serif; /* junicode, verdana; */
+	font-size: 14px;
+	text-indent: none;
+	text-align: justify;
+	box-shadow: .3125em .3125em .625em 0 #888;
+	margin: 1.25em auto;
+	padding: 1.25em;
+	width: 600px;
+	min-height: 90%;
+}
+
+.txmeditionpb {
+	text-align: center;
+}
+
+.txmeditionpb::before {
+	content: "- ";
+}
+
+.txmeditionpb::after {
+	content: " -";
+}
+
+.txmlettrinep:first-letter {
+    float: left;
+    font-size: 6em;
+    line-height: 1;
+    margin-right: 0.2em;
+}
+
+.marginalia {
+    float:        left;
+    margin-left: -100px;
+    width:        50px;
+    text-indent:  0cm;
+    text-align:   left;
+    hyphens:      auto;
+}
+
+a {
+	color:#802520;
+}
+
+h1 {
+	font-size: 20px;
+	font-variant: small-caps;
+	text-align: center;
+	color:#802520;
+}
+
+h2 {
+	font-size: 18px;
+	font-variant: small-caps;
+	text-align: center;
+	color:#802520;
+}
+
+h3 {
+	font-size: 16px;
+	font-variant: small-caps;
+	text-align: center;
+	color:#802520;
+}
+
+p {
+    	text-indent: 0.2cm;
+	text-align: justify;
+    	text-justify: inter-word;	
+  }
+
+img {
+    margin: 10px 10px 10px 10px;
+}
+
+td[rend="table-cell-align-right"] {
+	text-align: right;
+}
+
+td[rend="table-cell-align-left"] {
+	text-align: left;
+}
+
+td[rend="table-cell-align-center"] {
+	text-align: center;
+}
+
+.text-red-normal-bold-none {
+  color: blue;
+  font-style: normal;
+  font-weight : bold;
+  text-decoration : none;
+}
+
