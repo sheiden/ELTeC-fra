@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
-<!--
-
-Copyright © 2017 ENS de Lyon, CNRS, University of Franche-Comté
-Licensed under the terms of the GNU General Public License (http://www.gnu.org/licenses)
-@author sheiden
-
--->
 <xsl:stylesheet
+  xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:edate="http://exslt.org/dates-and-times"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:tei="http://www.tei-c.org/ns/1.0"
   xmlns:txm="http://textometrie.org/ns/1.0"
-  exclude-result-prefixes="tei edate"
   xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+  xmlns="http://www.tei-c.org/ns/1.0"
   version="2.0">
+
+  <xd:doc type="stylesheet">
+    <xd:copyright>2017, ENS de Lyon / IHRIM (Cactus), Licensed under the terms of the GNU General Public License (http://www.gnu.org/licenses)</xd:copyright>
+    <xd:author>Serge Heiden slh@ens-lyon.fr</xd:author>
+  </xd:doc>
+
 
   <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="no"/> 
   

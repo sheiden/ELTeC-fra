@@ -1,0 +1,461 @@
+
+== 1/2022
+
+- traduction du cahier des charges d'import BVH en EN
+
+Cahier des charges pour l'importation du corpus ELTeC-FRA dans la plateforme TXM
+
+Specifications for the importation of the ELTeC-FRA corpus into the TXM platform
+
+But de ce document 	2
+Commentaires généraux sur les spécifications	2
+Unité documentaire	2
+Spécification documentaire de l'unité documentaire	2
+Spécification technique de l'unité documentaire	2
+Métadonnées utiles	3
+Spécification des métadonnées principales	3
+Spécification technique des métadonnées principales	5
+Spécification des métadonnées secondaires	6
+Spécification technique des métadonnées secondaires	7
+Structure logique	7
+Spécification de la structure logique	7
+Spécification technique de la structure logique	7
+Dimensions textuelles	7
+Source ou langue principale du document	7
+Sources secondaires	8
+Hors-texte	8
+Unités	9
+Unités lexicales	9
+Unités de contextes	9
+Contrastes entre Unités	10
+Édition	10
+Unité éditoriale	10
+Rendu textuel	11
+Références	11
+Alignement	12
+Participation des outils de Traitement Automatique de la Langue (TAL)	12
+Annexe A – liste des éléments XML du texte  B372615206_3436_tei.xml
+
+-- EN
+
+Purpose of this document
+General comments on the specifications
+
+Document Unit 
+  Specification of the document unit
+  Technical specification of the document unit 
+
+Metadata
+Specification of Metadata
+Technical specification of Metadata
+
+Document Structure
+Specification of  Document Structure
+Technical specification of Document Structure
+
+Textual planes
+  Out of text
+  Out of text to edit
+  Out of text to edit as footnotes
+
+Language
+  Primary language
+  Secondary languages
+
+Lexical units
+
+Text Edition
+  Editorial Unit
+  -> book
+  Text Rendering
+  -> book formatting
+  Technical specification of Text Rendering
+  
+ [ Paper Format
+  https://apastyle.apa.org/style-grammar-guidelines/paper-format
+ ]
+
+References
+
+Alignment
+
+Milestone elements
+
+Natural Language Processing
+
+== 14/2/2022
+
+- import d'ELTeC-fra level 1 dans TXM 0.8.2
+
+- ELTeC encoding guidelines : https://distantreading.github.io/Schema/eltec-1.html
+
+- analyse du tableau tag-stats
+  - éclaircissement par 
+    - éléments hapax liés au teiHeader : authorGender, availability, distributor, encodingDesc, extent, fileDesc, keywords, language, langUsage, licence, measure, profileDesc, publicationStmt, pubPlace, reprintCount, revisionDesc, size, sourceDesc, term, textClass, textDesc, timeSlot, titleStmt
+    - autres éléments liés au teiHeader : date, publisher, title, bibl, author, respStmt, resp, idno, change
+    - éléments hapax tjrs présents : body, TEI, teiHeader, text
+  - milestone : edition (rendering)
+  
+xmlstarlet sel -N tei="http://www.tei-c.org/ns/1.0" -t -m "//tei:milestone" -c "." -n *.xml| sed -e 's/ xmlns="http:\/\/www.tei-c.org\/ns\/1.0"//g'| sed -e 's/ xmlns:xi="http:\/\/www.w3.org\/2001\/XInclude"//g'|sort|uniq -c
+
+     77 <milestone type="section" rend="asterisk" unit="asterisk"/>
+      2 <milestone type="section" rend="line" unit="line"/>
+      1 <milestone type="section" rend="other" unit="other"/>
+    164 <milestone type="section" rend="space" unit="newline"/>
+      2 <milestone type="section" unit="asterisk"/>
+     19 <milestone type="section" unit="asterisk" n="3"/>
+    153 <milestone unit="section"/>
+    334 <milestone unit="section" rend="asterisk"/>
+      4 <milestone unit="section" rend="asterisk" n="3"/>
+      1 <milestone unit="section" rend="dot"/>
+      1 <milestone unit="section" rend="dots"/>
+      1 <milestone unit="section" rend="line"/>
+      1 <milestone unit="section" rend="stars"/>
+      1 <milestone unit="section" rend="whitespace"/>
+     79 <milestone unit="section" type="asterisk"/>
+      4 <milestone unit="section" type="space"/>
+
+- ref : lien hypertexte
+
+xmlstarlet sel -N tei="http://www.tei-c.org/ns/1.0" -t -m "//tei:ref" -c "." -n *.xml| sed -e 's/ xmlns="http:\/\/www.tei-c.org\/ns\/1.0"//g'| sed -e 's/ xmlns:xi="http:\/\/www.w3.org\/2001\/XInclude"//g'|sort|uniq -c
+      
+   - notes
+      
+      grep FRA00101N01 *.xml
+FRA00101_Adam.xml:        <p>Je m'illusionne à croire que ce que nous faisons et disons au village pourrait intéresser quelque peu les gens lettrés et bien intentionnés à l'égard de nous autres paysans. Assuré que je m'illusionne ; mais fût-ce <ref target="#FRA00101N01">[1]</ref> ! il en sera ce qu'il en sera.</p>
+FRA00101_Adam.xml:        <note xml:id="FRA00101N01">Cette locution, très-usitée en Picardie, signifie tour à tour et souvent tout à la fois : Quand même ce serait ! Tant pis ! Qu'importe ! Après tout ! etc.</note>
+
+      1 <ref target="#FRA00101N01">[1]</ref>
+      1 <ref target="#FRA00101N02">[2]</ref>
+      1 <ref target="#FRA00101N03">[3]</ref>
+      ...
+      1 <ref target="#FRA00302_N01">(1)</ref>
+      1 <ref target="#FRA00302_N02">(1)</ref>
+      1 <ref target="#FRA00302_N03">(1)</ref>
+      ...
+
+  - lien hypertexte
+
+      3 <ref>http://fr.wikisource.org</ref>
+     20 <ref target="http://beq.ebooksgratuits.com"/>
+      1 <ref target="http://beq.ebooksgratuits.com/auteurs/terrail/index.htm">La seconde mère</ref>
+      1 <ref target="http://beq.ebooksgratuits.com/auteurs/terrail/index.htm">Marie-Claire</ref>
+      1 <ref target="http://beq.ebooksgratuits.com/vents-epub/Aimard-riviere.epub"/>
+      2 <ref target="http://beq.ebooksgratuits.com/vents/greville.htm"/>
+      3 <ref target="http://catalogue.bnf.fr/ark:/12148/cb311160052"/>
+      1 <ref target="http://efele.net/ebooks/livres/000015"/>
+      1 <ref target="http://efele.net/ebooks/livres/000067"/>
+      1 <ref target="http://efele.net/ebooks/livres/000075"/>
+      1 <ref target="http://fr.groups.yahoo.com/group/ebooksgratuits"/>
+      1 <ref target="http://gallica.bnf.fr/ark:/12148/bpt6k5607125s">http://gallica.bnf.fr/ark:/12148/bpt6k5607125s</ref>
+      2 <ref target="http://gallica.bnf.fr/ark:/12148/bpt6k5625757r"/>
+      1 <ref target="http://gallica.bnf.fr/ark:/12148/bpt6k57182783"/>
+      2 <ref target="http://gallica.bnf.fr/ark:/12148/bpt6k61362974"/>
+      ...
+      1 <ref target="https://cligs.hypotheses.org"/>
+      1 <ref target="https://ebooks-bnr.com/bonaparte-wyse-marie-laetitia-de-solms-le-piege-aux-maris-tome-1">Le piège aux maris</ref>
+      1 <ref target="https://ebooks-bnr.com/girardin-delphine-gay-de-marguerite/"/>
+      1 <ref target="https://ebooks-bnr.com/reybaud-fanny-mademoiselle-de-malepeire/"/>
+      1 <ref target="https://fr.wikisource.org/wiki/Fleurs_d%E2%80%99Orient"/>
+      1 <ref target="https://fr.wikisource.org/wiki/La_Nouvelle_Esp%C3%A9rance"/>
+      1 <ref target="https://fr.wikisource.org/wiki/La_S%C5%93ur_du_Soleil"/>
+      1 <ref target="https://fr.wikisource.org/wiki/Les_Princesses_d%E2%80%99Amour"/>
+      1 <ref target="https://fr.wikisource.org/wiki/Militona"/>
+      1 <ref target="https://fr.wikisource.org/wiki/Mon_village/Texte_entier"/>
+      1 <ref target="https://fr.wikisource.org/wiki/Pa%C3%AFenne"/>
+      1 <ref target="https://fr.wikisource.org/wiki/Toutoune_et_son_amour"/>
+      1 <ref target="https://gallica.bnf.fr/ark:/12148/bpt6k106372x"/>
+      1 <ref target="https://gallica.bnf.fr/ark:/12148/bpt6k111801"/>
+      1 <ref target="https://gallica.bnf.fr/ark:/12148/bpt6k113357j"/>
+      ...
+      1 <ref target="https://github.com/cligs/romandixneuf/blob/master/master/rd0010.xml">La baronne trépassée</ref>
+      1 <ref target="https://www.atramenta.net"/>
+      1 <ref target="https://www.ebooksgratuits.com/details.php?book=1289"/>
+      1 <ref target="https://www.ebooksgratuits.com/details.php?book=1329">https://www.ebooksgratuits.com/details.php?book=1329</ref>
+      1 <ref target="https://www.ebooksgratuits.com/details.php?book=953"/>
+      1 <ref target="https://www.fadedpage.com/showbook.php ?pid=20110610"/>
+      1 <ref target="https://www.gutenberg.org/ebooks/17757"/>
+      1 <ref target="http://www.beq.ebooksgratuits.com/"/>
+      1 <ref target="http://www.bibebook.com/ebook/libre/amedee_achard-belle-rose.epub">http://www.bibebook.com/ebook/libre/amedee_achard-belle-rose.epub</ref>
+      1 <ref target="http://www.bibebook.com/ebook/libre/arnould_galopin-le_docteur_omega_aventures_fantastiques_de_trois_francais_dans_la_planete_mars.epub">http://www.bibebook.com/ebook/libre/arnould_galopin-le_docteur_omega_aventures_fantastiques_de_trois_francais_dans_la_planete_mars.epub</ref>
+      1 <ref target="http://www.bibebook.com/ebook/libre/georges_eekhoud-lautre_vue.epub">http://www.bibebook.com/ebook/libre/georges_eekhoud-lautre_vue.epub</ref>
+      1 <ref target="http://www.bibebook.com/search/978-2-8247-0851-5">http://www.bibebook.com/search/978-2-8247-0851-5</ref>
+      1 <ref target="http://www.bibebook.com/search/978-2-8247-1132-4">http://www.bibebook.com/search/978-2-8247-1132-4</ref>
+      1 <ref target="http://www.bibebook.com/search/978-2-8247-1135-5">http://www.bibebook.com/search/978-2-8247-1135-5</ref>
+      1 <ref target="http://www.bibebook.com/search/978-2-8247-1249-9">http://www.bibebook.com/search/978-2-8247-1249-9</ref>
+      1 <ref target="http://www.bibebook.com/search/978-2-8247-1448-6">http://www.bibebook.com/search/978-2-8247-1448-6</ref>
+      4 <ref target="http://www.ebooksgratuits.com/"/>
+      1 <ref target="http://www.fr.wikisource.org"/>
+      1 <ref target="http://www.gutenberg.ebooks/34692">http://www.gutenberg.ebooks/34692</ref>
+      1 <ref target="http://www.gutenberg.ebooks/34693">http://www.gutenberg.ebooks/34693</ref>
+      1 <ref target="http://www.gutenberg.org/ebooks/18715"/>
+      1 <ref target="http://www. gutenberg. org/ebooks/26863"/>
+      1 <ref target="http://www.gutenberg.org/ebooks/50997">http ://www.gutenberg.org/ebooks/50997</ref>
+      1 <ref target="http://www.gutenberg.org/files/32113/32113-h/32113-h.htm">http ://www.gutenberg.org/files/32113/32113-h/32113-h.htm</ref>
+      1 <ref target="http://www.gutenberg.org/files/51703/51703-h/51703-h.htm">http ://www.gutenberg.org/files/51703/51703-h/51703-h.htm</ref>
+      1 <ref target="#N1">[1]</ref>
+      1 <ref target="#N2">[2]</ref>
+      1 <ref target="#N3">[1]</ref>
+      1 <ref target="#N4">[2]</ref>
+      1 <ref target="#N5">[3]</ref>
+      1 <ref target="#N6">[4]</ref>
+      1 <ref target="#note_1">[1]</ref>
+      2 <ref target="#unknownSource">#unknownSource</ref>
+     99 <ref type="doi" target="https://doi.org/10.5281/zenodo.3462435">ELTeC</ref>
+     99 <ref type="doi" target="https://doi.org/10.5281/zenodo.3462535">ELTeC-fra</ref>
+     99 <ref type="doi" target="https://doi.org/10.5281/zenodo.4662433">ELTeC-fra release 1.0.1</ref>
+     99 <ref type="doi" target="https://doi.org/10.5281/zenodo.4662444">ELTeC release 1.1.0</ref>
+      1 <ref xmlns:t="http://www.tei-c.org/ns/1.0" target="http://gallica.bnf.fr/ark:/12148/bpt6k96916946"/>
+      1 <ref xmlns:t="http://www.tei-c.org/ns/1.0" target="https://gallica.bnf.fr/ark:/12148/bpt6k96916946"/>
+      1 <ref xmlns:t="http://www.tei-c.org/ns/1.0" type="doi" target="https://doi.org/10.5281/zenodo.3462435">ELTeC</ref>
+      1 <ref xmlns:t="http://www.tei-c.org/ns/1.0" type="doi" target="https://doi.org/10.5281/zenodo.3462535">ELTeC-fra</ref>
+      1 <ref xmlns:t="http://www.tei-c.org/ns/1.0" type="doi" target="https://doi.org/10.5281/zenodo.4662433">ELTeC-fra release 1.0.1</ref>
+      1 <ref xmlns:t="http://www.tei-c.org/ns/1.0" type="doi" target="https://doi.org/10.5281/zenodo.4662444">ELTeC release 1.1.0</ref>
+
+- note
+
+xmlstarlet sel -N tei="http://www.tei-c.org/ns/1.0" -t -m "//tei:note" -c "." -n *.xml| sed -e 's/ xmlns="http:\/\/www.tei-c.org\/ns\/1.0"//g'| sed -e 's/ xmlns:xi="http:\/\/www.w3.org\/2001\/XInclude"//g'
+
+<note xml:id="FRA00101N01">Cette locution, très-usitée en Picardie, signifie tour à tour et souvent tout à la fois : Quand même ce serait ! Tant pis ! Qu'importe ! Après tout ! etc.</note>
+<note xml:id="FRA00101N02">Se dit pour dépêche-toi.</note>
+<note xml:id="FRA00101N03">Rester à la maison.</note>
+
+- note encodeur, fin de section + note auteur ?
+
+grep -3 FRA01201_N01 *.xml
+
+<note xml:id="FRA01201_N01">[1] Expression incertaine, impossible à vérifier en l'absence de l'image de scan de cette page. [Note du correcteur]</note>
+<note xml:id="FRA01201_N02"> [2] <hi>Avoir une épaisse couche de fard rouge sur les joues.</hi> Mon cher, reprit le comte, vous voyez que j'ai un pied de rouge sur les joues, ménagez-moi (FEUILLET, J. de Trécœur, 1872, p. 62). </note>
+<note xml:id="FRA01201_N03">[3] Vin rouge, surtout vin de Bordeaux.</note>
+
+...
+FRA01201_Feval.xml:          <p>« J'avais fait impression sur le père commun des fidèles par ma tournure galante et mon agréable caractère : au lieu d'être pendu, <hi>feu le petit collet</hi>,<ref target="#FRA01201_N01">(1)</ref> et Dieu sait où je serais parvenu dans cette voie nouvelle si le protonotaire apostolique n'avait eu une nièce. </p>
+...
+--
+FRA01201_Feval.xml-    </body>
+FRA01201_Feval.xml-    <back>
+FRA01201_Feval.xml-      <div type="notes">
+FRA01201_Feval.xml:        <note xml:id="FRA01201_N01">[1] Expression incertaine, impossible à vérifier en l'absence de l'image de scan de cette page. [Note du correcteur]</note>
+...
+
+- note de l'auteur
+
+<note xml:id="note_9"> En ce qui concerne les achats d'enfants par les nomades, lire le <hi rend="italic">Temps </hi>du 9 décembre 1909. On y verra comment l'acte de vente s'établit devant témoins qui signent (Tribunal correctionnel de Bellac).</note>
+
+- label
+
+grep -3 '<label>' *.xml
+
+FRA02202_Gouraud.xml-    <body>
+FRA02202_Gouraud.xml-      <div type="chapter">
+FRA02202_Gouraud.xml-        <p>
+FRA02202_Gouraud.xml:          <label>LA MÈRE</label>
+FRA02202_Gouraud.xml-        </p>
+FRA02202_Gouraud.xml-        <p>Voyons, n'en perds pas l'appétit ; avec ton Amérique, ne dirait-on pas que mon Pierrot va s'envoler ?</p>
+FRA02202_Gouraud.xml-        <p>
+FRA02202_Gouraud.xml:          <label>PIERRE</label>
+FRA02202_Gouraud.xml-        </p>
+FRA02202_Gouraud.xml-        <p>Et que diriez-vous, ma mère, si je vous disais que je suis décidé à voir du pays ?</p>
+FRA02202_Gouraud.xml-        <p>
+FRA02202_Gouraud.xml:          <label>LA MÈRE</label>
+FRA02202_Gouraud.xml-        </p>
+FRA02202_Gouraud.xml-        <p>Je dirais, mon cher enfant, que ce n'est pas à ton âge qu'on va courir les mondes. Je te permets d'aller jusqu'à Strasbourg, si ça te fait plaisir.</p>
+FRA02202_Gouraud.xml-        <p>
+FRA02202_Gouraud.xml:          <label>PIERRE</label>
+...
+FRA03702_Sand.xml-        <quote type="letter">
+FRA03702_Sand.xml-          <p>
+FRA03702_Sand.xml:            <label>De Tonino</label>
+FRA03702_Sand.xml-          </p>
+FRA03702_Sand.xml-          <p>
+FRA03702_Sand.xml-            <hi>(À deux mois d'intervalle après la mort de Jean).</hi>
+--
+FRA03702_Sand.xml-        </quote>
+FRA03702_Sand.xml-        <quote type="letter">
+FRA03702_Sand.xml-          <p>
+FRA03702_Sand.xml:            <label>Du même</label>
+FRA03702_Sand.xml-          </p>
+FRA03702_Sand.xml-          <p>
+FRA03702_Sand.xml-            <hi>(Après le mariage de Tonino avec Vanina).</hi>
+--
+FRA03702_Sand.xml-        </quote>
+FRA03702_Sand.xml-        <quote type="letter">
+FRA03702_Sand.xml-          <p>
+FRA03702_Sand.xml:            <label>Du même</label>
+FRA03702_Sand.xml-          </p>
+FRA03702_Sand.xml-          <p>
+FRA03702_Sand.xml-            <hi>(Un an plus tard).</hi>
+
+- name
+
+xmlstarlet sel -N tei="http://www.tei-c.org/ns/1.0" -t -m "//tei:name" -c "." -n *.xml| sed -e 's/ xmlns="http:\/\/www.tei-c.org\/ns\/1.0"//g'| sed -e 's/ xmlns:xi="http:\/\/www.w3.org\/2001\/XInclude"//g'|sort|uniq -c
+      3           </name>
+      1 <name/>
+      1 <name>Anne C.</name>
+      2 <name>Association de Promotion de l'Ecriture et de la Lecture</name>
+      2 <name>Bibliothèque électronique du Québec</name>
+      1 <name>Bibliothèque nationale de France, département Littérature et art, Y2-25681</name>
+      1 <name>BnF/Gallica</name>
+      4 <name>BnF</name>
+    174 <name>Christof Schöch</name>
+      2 <name>Dan Sayers</name>
+      1 <name>David Rakowski's </name>
+      1 <name>David Rakowski's</name>
+      1 <name>Distributed Proofreaders Canada</name>
+      1 <name>Ebooks libres et gratuits (AlbertA, Jean-Marc, Max, Coolmicro, Fred)</name>
+      1 <name>Ebooks libres et gratuits</name>
+      1 <name>équipe ELG</name>
+      1 <name>Eric Vautier</name>
+      2 <name>Fontes : David Rakowski's Manfred Klein Dan Sayers Justus Erich Walbaum - Khunrath</name>
+      2 <name>Françoise</name>
+      2 <name>Gabriel Cabos </name>
+      5 <name>Gallica</name>
+      1 <name>Giovanni Fini, Clarity and the Online Distributed Proofreading Team at http://www.pgdp.net</name>
+      2 <name>Gutenberg.org</name>
+      1 <name>Isabelle</name>
+      2 <name>Jean-Yves Dupuis</name>
+      1 <name> Justus Erich Walbaum </name>
+      1 <name>Justus Erich Walbaum</name>
+      2 <name>Khunrath</name>
+      2 <name>L'Association Les Bourlapapey, bibliothèque numérique romande</name>
+      1 <name>Manfred Klein </name>
+      1 <name>Manfred Klein</name>
+      1 <name>Maurice, Coolmicro et Fred.</name>
+      1 <name>Mireille Harmelin and the Online Distributed Proofreaders Europe </name>
+      2 <name>Mireille Harmelin</name>
+      1 <name>Online Distributed Proofreading Team</name>
+     15 <name>Pia Geißel</name>
+      2 <name>Rénald Lévesque</name>
+      1 <name>Rezearta Murati</name>
+      1 <name>Sapcal22</name>
+      1 <name>Stefanie Popp</name>
+      1 <name>Suzanne Shell</name>
+      1 <name>Wikisource contributors, <ref>http://fr.wikisource.org</ref>
+      5 <name>Wikisource</name>
+      2 <name> Wikisource <ref>http://fr.wikisource.org</ref>
+      2 <name xmlns:t="http://www.tei-c.org/ns/1.0">Christof Schöch</name>
+
+- foreign
+
+xmlstarlet sel -N tei="http://www.tei-c.org/ns/1.0" -t -m "//tei:foreign" -c "." -n *.xml| sed -e 's/ xmlns="http:\/\/www.tei-c.org\/ns\/1.0"//g'| sed -e 's/ xmlns:xi="http:\/\/www.w3.org\/2001\/XInclude"//g'|sort|uniq -c
+
+      1 <foreign>adoves</foreign>
+      1 <foreign>alguazil</foreign>
+      1 <foreign>Ato li pa guen soumaké. Sa pa arien.</foreign>
+      ...
+      1 <foreign rend="italic">ashahas</foreign>
+      1 <foreign rend="italic">atepelt</foreign>
+      1 <foreign rend="italic">Barbarus has segetes !</foreign>
+      ...
+      1 <foreign xml:id="lat">cum privilegio</foreign>
+      1 <foreign xml:lang="creole">E si nou kontré ké roch,</foreign>
+      1 <foreign xml:lang="creole">M'a kasé-yé ké mo do.</foreign>
+      1 <foreign xml:lang="deu">Alle Erscheinungen dieser Zeit zeigen dass die Befriedigung im alten Leben sich nicht mehr findet.</foreign>
+      1 <foreign xml:lang="deu">Gute Gesellschaft habe ich gesehen ; man nennt sie die gute Weil sie zum kleinsten Gedicht keine Gelegenheit gibt.</foreign>
+      1 <foreign xml:lang="deu">Hast du die gute Gesellschaft gesehen ?</foreign>
+      1 <foreign xml:lang="deu"><hi>Allein</hi> Dich auf die See des Lebens wagen. </foreign>
+      1 <foreign xml:lang="deu"><hi>Allein</hi> , <hi>allein</hi> , nach Deinem Himmel ringen. </foreign>
+      1 <foreign xml:lang="deu"><hi>Allein</hi> musst Du entfalten deine Schwingen, </foreign>
+      1 <foreign xml:lang="deu"><hi>Allein</hi> nach Deinem Idealen jagen, </foreign>
+      1 <foreign xml:lang="deu">« Mein Reich ist in der Luft... »</foreign>
+      1 <foreign xml:lang="eng">garden-parties, lawn-tennis</foreign>
+      1 <foreign xml:lang="eng" rend="italic">bow-knife</foreign>
+      1 <foreign xml:lang="eng" rend="italic">English</foreign>
+      1 <foreign xml:lang="eng" rend="italic">mustang,</foreign>
+...
+
+- gap
+
+xmlstarlet sel -N tei="http://www.tei-c.org/ns/1.0" -t -m "//tei:gap" -c "." -n *.xml| sed -e 's/ xmlns="http:\/\/www.tei-c.org\/ns\/1.0"//g'| sed -e 's/ xmlns:xi="http:\/\/www.w3.org\/2001\/XInclude"//g'|sort|uniq -c
+
+     - édition marque hors texte
+     
+     39 <gap/>
+      2 <gap extent="1" unit="figure"/>
+      5 <gap extent="figure"/>
+      1 <gap quantity="1" unit="figure"/>
+      1 <gap unit="toc"/>
+            
+     - édition marque figure hors texte
+     
+     38 <gap rend="figure"/>
+     
+     FRA05702_Maquet.xml-        <p>— À son frère, le grand-duc.</p>
+FRA05702_Maquet.xml-        <p>— Et cette lettre, sire ?...</p>
+FRA05702_Maquet.xml-        <p>— Cette lettre, m'a dit la reine, s'est trouvée égarée, dans le désordre où l'affreuse
+FRA05702_Maquet.xml:          <gap rend="figure"/> <!-- — Je t'ai déjà dit de ne pas faire un geste. — Page 790. --> nouvelle plongea tout le palais. Cette lettre inachevée disparut, et jamais nul n'a su ce qu'elle était devenue, bien que personne, assurait ma mère, n'eût pénétré alors dans sa chambre. Pontis écouta religieusement ces détails.</p>
+FRA05702_Maquet.xml-        <p>— La mémoire de Votre Majesté, dit-il, est fidèle.</p>
+FRA05702_Maquet.xml-        <p>Il tira de son pourpoint une enveloppe épaisse, cachetée, qu'il déposa entre les mains du roi.</p>
+FRA05702_Maquet.xml-        <p>— Veuillez ouvrir, dit-il, sire. Et il éclaira de sa lampe.</p>
+
+     - édition marque illustration hors texte
+     
+      7 <gap rend="graphic"/>
+      1 <gap rend="graphics"/>
+      2 <gap unit="figure"/>
+     14 <gap unit="figure" extent="1"/>
+      3 <gap unit="graphic"/>
+            
+FRA00701_Carraud.xml-          <!-- a picture in the original has been omitted.Illustration : Jeanne et ses deux enfants. -->
+FRA00701_Carraud.xml:          <gap rend="graphic"/>
+FRA00701_Carraud.xml-          <p>— Mais si tu ne mets pas de la paille pourrir devant ta porte, le peu de bétail que tu as ne pourra suffire à fumer tes champs. </p>
+
+      1 <gap xmlns:t="http://www.tei-c.org/ns/1.0" unit="graphic" n="Images/img001.jpg"/>
+      1 <gap xmlns:t="http://www.tei-c.org/ns/1.0" unit="graphic" n="images/PAG_00000011_IL000001.jpg"/>
+      1 <gap xmlns:t="http://www.tei-c.org/ns/1.0" unit="graphic" n="images/PAG_00000013_IL000001.jpg"/>
+      1 <gap xmlns:t="http://www.tei-c.org/ns/1.0" unit="graphic" n="images/PAG_00000013_IL000002.jpg"/>
+      1 <gap xmlns:t="http://www.tei-c.org/ns/1.0" unit="graphic" n="images/PAG_00000014_IL000001.jpg"/>
+...
+
+FRA06501_Gyp.xml-        <p><hi>Excelsior</hi></p>
+FRA06501_Gyp.xml-        <gap unit="graphic" n="Images/img001.jpg"/>
+FRA06501_Gyp.xml-        <p>TOTOTE </p>
+FRA06501_Gyp.xml:        <gap unit="graphic" n="images/PAG_00000011_IL000001.jpg"/>
+FRA06501_Gyp.xml-        <p>ROMAN INÉDIT </p>
+FRA06501_Gyp.xml-        <p>
+FRA06501_Gyp.xml-          <hi>ORNÉ DE CENT ILLUSTRATIONS</hi>
+
+- trailer
+
+grep -3 '<trailer' *.xml
+
+FRA07601_Leroux.xml-          <p>... Et tout le monde est heureux à Corfou, où le ciel et la mer sont toujours bleus.</p>
+FRA07601_Leroux.xml:          <trailer>FIN</trailer>
+FRA07601_Leroux.xml-        </div>
+
+- corr
+
+xmlstarlet sel -N tei="http://www.tei-c.org/ns/1.0" -t -m "//tei:corr" -c "." -n *.xml| sed -e 's/ xmlns="http:\/\/www.tei-c.org\/ns\/1.0"//g'| sed -e 's/ xmlns:xi="http:\/\/www.w3.org\/2001\/XInclude"//g'|sort|uniq -c
+
+      1 <corr>anthropophages</corr>
+      1 <corr>atterrée</corr>
+      1 <corr>bouffonne</corr>
+      1 <corr>carriole</corr>
+      1 <corr>chuchotait-on</corr>
+      5 <corr>dénouement</corr>
+      1 <corr>dévouement</corr>
+      1 <corr>domestique</corr>
+      1 <corr>durent</corr>
+      1 <corr>éminemment</corr>
+      1 <corr>éperdument</corr>
+      1 <corr>familièrement</corr>
+      1 <corr>Fiévreusement</corr>
+      1 <corr>l'hôtelière</corr>
+      1 <corr>privilège</corr>
+      1 <corr>remerciement</corr>
+      1 <corr>remerciements</corr>
+      1 <corr>remerczment</corr>
+      1 <corr>renfrogné</corr>
+      1 <corr>s'écria</corr>
+      1 <corr>souffrirait-il</corr>
+      4 <corr>verrous</corr>
+      1 <corr>voie</corr>
+
+grep -3 '<corr' *.xml
+
+FRA05702_Maquet.xml:        <p>La Vienne répliqua par un <corr>remerciement</corr> Sietie-Iglesias, se penchant à l'oreille d'Henriette, lui fit sans doute quelque conte bien plaisant, car la marquise se mit à rire aussi et dit au baigneur : </p>
+
+- éditeur ?
+
+== VOIR /home/sheiden/git/ELTeC-fra/txm/JOURNAL.md
+

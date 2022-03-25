@@ -2,9 +2,13 @@
 <xsl:stylesheet
   xmlns:xd="http://www.pnp-software.com/XSLTdoc"
   xmlns:edate="http://exslt.org/dates-and-times"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0"
-  exclude-result-prefixes="tei edate xd" version="2.0">
- 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:tei="http://www.tei-c.org/ns/1.0"
+  xmlns:txm="http://textometrie.org/ns/1.0"
+  xpath-default-namespace="http://www.tei-c.org/ns/1.0"
+  xmlns="http://www.tei-c.org/ns/1.0"
+  version="2.0">
+   
   <xd:doc type="stylesheet">
     <xd:short>
       Feuille de style de conversion de pc en w à utiliser comme
